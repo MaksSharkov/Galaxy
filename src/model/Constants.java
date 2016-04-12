@@ -27,12 +27,15 @@ public class Constants {
 	public static final int GAMEFIELD_INITIALIZE_HEIGHT = 600;
 	public static final int GAMEFIELD_INITIALIZE_X = 0;
 	public static final int GAMEFIELD_INITIALIZE_Y = 0;
-	
+
 	public static final long THREAD_SLEEP = 10;
 	public static final int MAX_BULLET_COUNT_PER_SHIP = 2;
-	
-	public static final String SHOOT_SOUND="/resources/shoot.wav";
-	public static final String PLAYERDEAD_SOUND="/resources/playerDead.wav";
+
+	public static final int MAXIMUM_PROBABILITY = 100;
+	public static final int DODGE_PROBABILITY = 75;
+
+	public static final String SHOOT_SOUND = "/resources/shoot.wav";
+	public static final String PLAYERDEAD_SOUND = "/resources/playerDead.wav";
 
 	private Constants() {
 
