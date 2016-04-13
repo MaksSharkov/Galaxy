@@ -31,7 +31,7 @@ public class View extends JFrame implements Listener {
 	private JPanel ship = new TexturedPanel("/resources/ship.png");
 	private JPanel enemyShip = new TexturedPanel("/resources/enemy.png");
 	private List<JPanel> bulletList = new ArrayList<JPanel>();
-	JLabel scores = new JLabel("Score: " + score);
+	private JLabel scores = new JLabel("Score: " + score);
 
 	public View(Controller controller) {
 		this.controller = controller;
@@ -173,10 +173,14 @@ public class View extends JFrame implements Listener {
 		score += 2;
 		scores.setText("Score: " + score);
 	}
-	
+
 	private void delPoint() {
 		score -= 2;
 		scores.setText("Score: " + score);
+	}
+
+	public int getScores() {
+		return score;
 	}
 
 	private void initializeGameField(ObjectInfo data) {

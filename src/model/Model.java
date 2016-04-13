@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 
+import view.EndGameFrame;
+
 import model.listeners.Listener;
 import model.listeners.Listeners;
 
@@ -87,7 +89,8 @@ public class Model {
 				isGameRunning = false;
 				playerShip.kill();
 				enemyShip.kill();
-				enemyDead.play();
+				enemyDead.play();	
+				new EndGameFrame(true);
 			}
 			
 			if (playerShip.isShootedBy(enemyShip)) {
@@ -95,6 +98,7 @@ public class Model {
 				playerShip.kill();
 				enemyShip.kill();
 				playerDead.play();
+				new EndGameFrame(false);
 			}
 
 			playerShip.flushOutScreenBullets();
