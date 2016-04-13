@@ -16,6 +16,7 @@ public class Model {
 	private Listeners listeners = new Listeners();
 	
 	private Sound playerDead = new Sound(Constants.PLAYERDEAD_SOUND);
+	private Sound enemyDead = new Sound(Constants.ENEMYDEAD_SOUND);
 
 	public void addListener(Listener name) {
 		this.listeners.addListener(name);
@@ -86,6 +87,7 @@ public class Model {
 				isGameRunning = false;
 				playerShip.kill();
 				enemyShip.kill();
+				enemyDead.play();
 			}
 			
 			if (playerShip.isShootedBy(enemyShip)) {

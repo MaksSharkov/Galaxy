@@ -154,6 +154,10 @@ public class View extends JFrame implements Listener {
 						addPoint();
 						return;
 					}
+					if (sender == Sender.BULLET) {
+						delPoint();
+						return;
+					}
 					newBullet.setVisible(false);
 					bulletList.remove(newBullet);
 					break;
@@ -167,6 +171,11 @@ public class View extends JFrame implements Listener {
 
 	private void addPoint() {
 		score += 2;
+		scores.setText("Score: " + score);
+	}
+	
+	private void delPoint() {
+		score -= 2;
 		scores.setText("Score: " + score);
 	}
 

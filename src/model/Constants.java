@@ -32,10 +32,11 @@ public class Constants {
 	public static final int MAX_BULLET_COUNT_PER_SHIP = 2;
 
 	public static final int MAXIMUM_PROBABILITY = 100;
-	public static final int DODGE_PROBABILITY = 75;
+	public static final int DODGE_PROBABILITY = 100;
 
 	public static final String SHOOT_SOUND = "/resources/shoot.wav";
 	public static final String PLAYERDEAD_SOUND = "/resources/playerDead.wav";
+	public static final String ENEMYDEAD_SOUND = "/resources/enemyDead.wav";
 
 	private Constants() {
 
