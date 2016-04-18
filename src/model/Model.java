@@ -4,10 +4,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 
-import view.EndGameFrame;
-
 import model.listeners.Listener;
 import model.listeners.Listeners;
+import view.EndGameFrame;
 
 public class Model {
 	private GameField gameField;

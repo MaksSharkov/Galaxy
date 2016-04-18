@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -26,6 +27,9 @@ public class View extends JFrame implements Listener {
 	private final String title = "Galaxy";
 	private Controller controller;
 	private int score = 0;
+	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	private int halfScreenWidth = screenSize.width / 2;
+	private int halfScreenHeight = screenSize.height / 2;
 
 	private JPanel gameField = new JPanel();
 	private JPanel ship = new TexturedPanel("/resources/ship.png");
@@ -40,6 +44,10 @@ public class View extends JFrame implements Listener {
 		this.setTitle(title);
 		this.setPreferredSize(new Dimension(Constants.VIEW_INITIALIZE_WIDTH,
 				Constants.VIEW_INITIALIZE_HEIGHT));
+		this.setLocation(halfScreenWidth
+				- model.Constants.VIEW_INITIALIZE_WIDTH / 2,
+				halfScreenHeight - model.Constants.VIEW_INITIALIZE_HEIGHT
+						/ 2);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pack();

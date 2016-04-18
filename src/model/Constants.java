@@ -22,6 +22,9 @@ public class Constants {
 
 	public static final int VIEW_INITIALIZE_WIDTH = 410;
 	public static final int VIEW_INITIALIZE_HEIGHT = 660;
+	
+	public static final int END_GAME_INITIALIZE_WIDTH = 350;
+	public static final int END_GAME_INITIALIZE_HEIGHT = 200;
 
 	public static final int GAMEFIELD_INITIALIZE_WIDTH = 400;
 	public static final int GAMEFIELD_INITIALIZE_HEIGHT = 600;
