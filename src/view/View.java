@@ -6,19 +6,18 @@ import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import model.Bullet;
 import model.Constants;
 import model.ObjectInfo;
 import model.listeners.EventData;
 import model.listeners.Listener;
 import model.listeners.Sender;
+import model.objects.Bullet;
+import resourcer.Resourcer;
 import controller.Controller;
 
 public class View extends JFrame implements Listener {
@@ -26,16 +25,15 @@ public class View extends JFrame implements Listener {
 	private static final long serialVersionUID = 7798987455797195035L;
 	private final String title = "Galaxy";
 	private Controller controller;
-	private int score = 0;
+	private static int score = 0;
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private int halfScreenWidth = screenSize.width / 2;
 	private int halfScreenHeight = screenSize.height / 2;
 
 	private JPanel gameField = new JPanel();
-	private JPanel ship = new TexturedPanel("/resources/ship.png");
-	private JPanel enemyShip = new TexturedPanel("/resources/enemy.png");
-	private List<JPanel> bulletList = new ArrayList<JPanel>();
-	private JLabel scores = new JLabel("Score: " + score);
+	private JPanel ship = new TexturedPanel(Constants.PLAYER_IMAGE);
+	private JPanel enemyShip = new TexturedPanel(Constants.ENEMY_IMAGE);
+	private static JLabel scores = new JLabel(Resourcer.getString("msg.score"));
 
 	public View(Controller controller) {
 		this.controller = controller;
@@ -45,9 +43,8 @@ public class View extends JFrame implements Listener {
 		this.setPreferredSize(new Dimension(Constants.VIEW_INITIALIZE_WIDTH,
 				Constants.VIEW_INITIALIZE_HEIGHT));
 		this.setLocation(halfScreenWidth
-				- model.Constants.VIEW_INITIALIZE_WIDTH / 2,
-				halfScreenHeight - model.Constants.VIEW_INITIALIZE_HEIGHT
-						/ 2);
+				- model.Constants.VIEW_INITIALIZE_WIDTH / 2, halfScreenHeight
+				- model.Constants.VIEW_INITIALIZE_HEIGHT / 2);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pack();
@@ -143,52 +140,13 @@ public class View extends JFrame implements Listener {
 
 	private void initializeBullet(Bullet bullet) {
 		ObjectInfo bulletObject = bullet.getObjectInfo();
-		final JPanel newBullet = new JPanel();
+		final BulletPanel newBullet = new BulletPanel();
 		newBullet.setVisible(true);
 		newBullet.setBackground(bulletObject.getColor());
 		newBullet.setSize(bulletObject.getDim());
 		newBullet.setLocation(bulletObject.getPosition());
-
-		bullet.addListener(new Listener() {
-			public void handleEvent(EventData eventData) {
-				Sender sender = eventData.getSender();
-
-				switch (eventData.getEvent()) {
-				case SHIFT:
-					moveBullet(newBullet, (ObjectInfo) eventData.getObject());
-					break;
-				case END_SHOOT:
-					if (sender == Sender.ENEMY_BULLET) {
-						addPoint();
-						return;
-					}
-					if (sender == Sender.BULLET) {
-						delPoint();
-						return;
-					}
-					newBullet.setVisible(false);
-					bulletList.remove(newBullet);
-					break;
-				default:
-					break;
-				}
-			}
-		});
+		bullet.addListener(newBullet);
 		gameField.add(newBullet);
-	}
-
-	private void addPoint() {
-		score += 2;
-		scores.setText("Score: " + score);
-	}
-
-	private void delPoint() {
-		score -= 2;
-		scores.setText("Score: " + score);
-	}
-
-	public int getScores() {
-		return score;
 	}
 
 	private void initializeGameField(ObjectInfo data) {
@@ -208,8 +166,13 @@ public class View extends JFrame implements Listener {
 		enemyShip.setLocation(data.getPosition());
 	}
 
-	private synchronized void moveBullet(JPanel bulletPanel, ObjectInfo data) {
-		bulletPanel.setLocation(data.getPosition());
+	public static int getScore() {
+		return score;
 	}
 
+	public static void setScore(int score) {
+		View.score = score;
+		String scoreText = Resourcer.getString("msg.score");
+		scores.setText(scoreText + View.score);
+	}
 }

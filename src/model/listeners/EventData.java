@@ -1,6 +1,5 @@
 package model.listeners;
 
-
 public class EventData {
 
 	private Sender sender;

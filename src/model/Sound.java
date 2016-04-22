@@ -37,9 +37,9 @@ public class Sound {
 			exc.printStackTrace();
 			released = false;
 		} catch (UnsupportedAudioFileException exc) {
-
+			exc.printStackTrace();
 		} catch (LineUnavailableException exc) {
-
+			exc.printStackTrace();
 		}
 	}
 
@@ -105,6 +105,7 @@ public class Sound {
 					clip.wait();
 				}
 			} catch (InterruptedException exc) {
+				exc.printStackTrace();
 			}
 		}
 	}

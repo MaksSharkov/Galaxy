@@ -9,6 +9,8 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import resourcer.Resourcer;
+
 public class EndGameFrame extends JFrame {
 
 	private static final long serialVersionUID = 6340709615001796726L;
@@ -33,20 +35,22 @@ public class EndGameFrame extends JFrame {
 				model.Constants.END_GAME_INITIALIZE_WIDTH,
 				model.Constants.END_GAME_INITIALIZE_HEIGHT));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.pack();
 
 		if (win) {
-			
+
 			winStatus.setForeground(Color.GREEN);
-			winStatus.setText("YOU WIN!");
+			String gameOver = Resourcer.getString("msg.gameover.win");
+			winStatus.setText(gameOver);
 		}
 		if (!win) {
 			winStatus.setForeground(Color.RED);
-			winStatus.setText("YOU LOSE!");
+			String gameOver = Resourcer.getString("msg.gameover.lose");
+			winStatus.setText(gameOver);
 		}
 		winStatus.setHorizontalAlignment((int) CENTER_ALIGNMENT);
 		winStatus.setVisible(true);
 		winStatus.setFont(font);
 		this.getContentPane().add(winStatus, BorderLayout.CENTER);
+		this.pack();
 	}
 }

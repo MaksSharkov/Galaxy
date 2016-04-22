@@ -4,6 +4,9 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.objects.Bullet;
+import model.objects.Ship;
+
 public class BulletList {
 	private List<Bullet> list = new ArrayList<Bullet>();
 

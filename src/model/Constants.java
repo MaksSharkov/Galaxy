@@ -22,7 +22,7 @@ public class Constants {
 
 	public static final int VIEW_INITIALIZE_WIDTH = 410;
 	public static final int VIEW_INITIALIZE_HEIGHT = 660;
-	
+
 	public static final int END_GAME_INITIALIZE_WIDTH = 350;
 	public static final int END_GAME_INITIALIZE_HEIGHT = 200;
 
@@ -40,6 +40,8 @@ public class Constants {
 	public static final String SHOOT_SOUND = "/resources/shoot.wav";
 	public static final String PLAYERDEAD_SOUND = "/resources/playerDead.wav";
 	public static final String ENEMYDEAD_SOUND = "/resources/enemyDead.wav";
+	public static final String ENEMY_IMAGE = "/resources/enemy.png";
+	public static final String PLAYER_IMAGE = "/resources/ship.png";
 
 	private Constants() {
 

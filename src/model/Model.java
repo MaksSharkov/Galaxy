@@ -6,6 +6,8 @@ import java.awt.Point;
 
 import model.listeners.Listener;
 import model.listeners.Listeners;
+import model.objects.EnemyShip;
+import model.objects.PlayerShip;
 import view.EndGameFrame;
 
 public class Model {
@@ -15,7 +17,7 @@ public class Model {
 	private boolean isGameRunning;
 
 	private Listeners listeners = new Listeners();
-	
+
 	private Sound playerDead = new Sound(Constants.PLAYERDEAD_SOUND);
 	private Sound enemyDead = new Sound(Constants.ENEMYDEAD_SOUND);
 
@@ -37,7 +39,7 @@ public class Model {
 				Color.BLACK, gameFieldPosition);
 		this.gameField = new GameField(gameFieldInfo, this.listeners);
 	}
-	
+
 	private void initializeShip() {
 		Dimension shipDimension = new Dimension(Constants.SHIP_WIDTH,
 				Constants.SHIP_HEIGHT);
@@ -88,10 +90,10 @@ public class Model {
 				isGameRunning = false;
 				playerShip.kill();
 				enemyShip.kill();
-				enemyDead.play();	
+				enemyDead.play();
 				new EndGameFrame(true);
 			}
-			
+
 			if (playerShip.isShootedBy(enemyShip)) {
 				isGameRunning = false;
 				playerShip.kill();
