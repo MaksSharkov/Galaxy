@@ -20,21 +20,62 @@ import model.objects.Bullet;
 import resourcer.Resourcer;
 import controller.Controller;
 
+/**
+ * ќтвечает за отображение информации (визуализацию).
+ * 
+ * @author Maks_Sh
+ * 
+ */
 public class View extends JFrame implements Listener {
 
 	private static final long serialVersionUID = 7798987455797195035L;
+	/**
+	 * «аголовок окна.
+	 */
 	private final String title = "Galaxy";
+	/**
+	 * ќбъект контроллер.
+	 */
 	private Controller controller;
+	/**
+	 *  оличество игровых очков.
+	 */
 	private static int score = 0;
+	/**
+	 * –азрешение экрана монитора.
+	 */
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	/**
+	 * ѕоловина ширины экрана монитора.
+	 */
 	private int halfScreenWidth = screenSize.width / 2;
+	/**
+	 * ѕоловина высоты экрана монитора.
+	 */
 	private int halfScreenHeight = screenSize.height / 2;
 
+	/**
+	 * ѕанель игрового пол€.
+	 */
 	private JPanel gameField = new JPanel();
+	/**
+	 * ѕанель кораблика игрока с наложенной текстурой.
+	 */
 	private JPanel ship = new TexturedPanel(Constants.PLAYER_IMAGE);
+	/**
+	 * ѕанель кораблика врага с наложенной текстурой.
+	 */
 	private JPanel enemyShip = new TexturedPanel(Constants.ENEMY_IMAGE);
-	private static JLabel scores = new JLabel(Resourcer.getString("msg.score"));
+	/**
+	 * ѕанель отображающа€ игровые очки.
+	 */
+	private static JLabel scores = new JLabel(String.format("%-7s%-3d",
+			Resourcer.getString("msg.score"), score));
 
+	/**
+	 *  онструктор представлени€.
+	 * @param controller объект контроллер.
+	 */
 	public View(Controller controller) {
 		this.controller = controller;
 		this.controller.addListener(this);
@@ -53,6 +94,9 @@ public class View extends JFrame implements Listener {
 		initScoreField();
 	}
 
+	/**
+	 * ћетод инициализирует панель с игровыми очками.
+	 */
 	private void initScoreField() {
 		JPanel scorePanel = new JPanel();
 		scorePanel.setLayout(new FlowLayout());
@@ -60,6 +104,9 @@ public class View extends JFrame implements Listener {
 		this.getContentPane().add(scorePanel, BorderLayout.SOUTH);
 	}
 
+	/**
+	 * ћетод обрабатывает игровые событи€.
+	 */
 	public void handleEvent(EventData eventData) {
 		Sender sender = eventData.getSender();
 		model.listeners.Event event = eventData.getEvent();
@@ -97,6 +144,9 @@ public class View extends JFrame implements Listener {
 		}
 	}
 
+	/**
+	 * ћетод инициализирующий слушател€ нажати€ клавиш клавиатуры.
+	 */
 	private void initKeyListener() {
 		this.addKeyListener(new KeyAdapter() {
 
@@ -122,6 +172,10 @@ public class View extends JFrame implements Listener {
 		});
 	}
 
+	/**
+	 * ћетод создающий панель вражеского кораблика.
+	 * @param data данные о вражеском кораблике (размер, положение и т.д.)
+	 */
 	private void initializeEnemyShip(ObjectInfo data) {
 		gameField.add(enemyShip);
 		enemyShip.setVisible(true);
@@ -130,6 +184,10 @@ public class View extends JFrame implements Listener {
 		enemyShip.setLocation(data.getPosition());
 	}
 
+	/**
+	 * ћетод создающий панель кораблика игрока.
+	 * @param data данные о кораблике игрока (размер, положение и т.д.)
+	 */
 	private void initializeShip(ObjectInfo data) {
 		gameField.add(ship);
 		ship.setVisible(true);
@@ -138,6 +196,10 @@ public class View extends JFrame implements Listener {
 		ship.setLocation(data.getPosition());
 	}
 
+	/**
+	 * ћетод создающий панель новой пули.
+	 * @param bullet данные о пуле (размер, положение и т.д.)
+	 */
 	private void initializeBullet(Bullet bullet) {
 		ObjectInfo bulletObject = bullet.getObjectInfo();
 		final BulletPanel newBullet = new BulletPanel();
@@ -149,6 +211,10 @@ public class View extends JFrame implements Listener {
 		gameField.add(newBullet);
 	}
 
+	/**
+	 * ћетод создающий панель игрового пол€.
+	 * @param data данные о игровом поле (размер, положение и т.д.)
+	 */
 	private void initializeGameField(ObjectInfo data) {
 		gameField.setLayout(null);
 		gameField.setVisible(true);
@@ -158,21 +224,37 @@ public class View extends JFrame implements Listener {
 		this.getContentPane().add(gameField, BorderLayout.CENTER);
 	}
 
+	/**
+	 * ћетод измен€ет положение панельки кораблика игрока на экране.
+	 * @param data данные о кораблике игрока (размер, положение и т.д.)
+	 */
 	private synchronized void moveShip(ObjectInfo data) {
 		ship.setLocation(data.getPosition());
 	}
 
+	/**
+	 * ћетод измен€ет положение панельки кораблика врага на экране.
+	 * @param data данные о кораблике врага (размер, положение и т.д.)
+	 */
 	private synchronized void moveEnemy(ObjectInfo data) {
 		enemyShip.setLocation(data.getPosition());
 	}
 
+	/**
+	 * ћетод получает текущее значение игровых очков.
+	 * @return возвращает значение игровых очков.
+	 */
 	public static int getScore() {
 		return score;
 	}
 
+	/**
+	 * ћетод устанавливает новое значение игровых очков и выводит его на панель очков.
+	 * @param score новое значение игровых очков.
+	 */
 	public static void setScore(int score) {
 		View.score = score;
 		String scoreText = Resourcer.getString("msg.score");
-		scores.setText(scoreText + View.score);
+		scores.setText(String.format("%-7s%-3d", scoreText, View.score));
 	}
 }

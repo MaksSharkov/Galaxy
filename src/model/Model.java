@@ -9,26 +9,64 @@ import model.listeners.Listeners;
 import model.objects.EnemyShip;
 import model.objects.PlayerShip;
 import view.EndGameFrame;
-
+/**
+ * Модель предоставляет знания: данные и методы работы с этими данными,
+ * реагирует на запросы, изменяя своё состояние. Не содержит информации, как эти
+ * знания можно визуализировать.
+ * 
+ * @author Maks_Sh
+ *
+ */
 public class Model {
+	/**
+	 * Игровое поле.
+	 */
 	private GameField gameField;
+	/**
+	 * Кораблик игрока.
+	 */
 	private PlayerShip playerShip;
+	/**
+	 * Кораблик врага.
+	 */
 	private EnemyShip enemyShip;
+	/**
+	 * Отвечает за текущее состояние игры: true - игра запущена, false - игра не запущена.
+	 */
 	private boolean isGameRunning;
 
+	/**
+	 * Список слушателей.
+	 */
 	private Listeners listeners = new Listeners();
 
+	/**
+	 * Звук проигрываемый при проигрыше.
+	 */
 	private Sound playerDead = new Sound(Constants.PLAYERDEAD_SOUND);
+	/**
+	 * Звук проигрываемый при выигрыше.
+	 */
 	private Sound enemyDead = new Sound(Constants.ENEMYDEAD_SOUND);
 
+	/**
+	 * Добавляет нового слушателя в список слушателей.
+	 * @param name имя добавляемого слушателя
+	 */
 	public void addListener(Listener name) {
 		this.listeners.addListener(name);
 	}
 
+	/**
+	 * Конструктор модели.
+	 */
 	public Model() {
 		super();
 	}
 
+	/**
+	 * Метод создающий игровое поле.
+	 */
 	private void initializeGameField() {
 		Dimension gameFieldDimension = new Dimension(
 				Constants.GAMEFIELD_INITIALIZE_WIDTH,
@@ -40,6 +78,9 @@ public class Model {
 		this.gameField = new GameField(gameFieldInfo, this.listeners);
 	}
 
+	/**
+	 * Метод создающий кораблик игрока.
+	 */
 	private void initializeShip() {
 		Dimension shipDimension = new Dimension(Constants.SHIP_WIDTH,
 				Constants.SHIP_HEIGHT);
@@ -50,6 +91,9 @@ public class Model {
 		this.playerShip = new PlayerShip(shipInfo, this.gameField, listeners);
 	}
 
+	/**
+	 * Метод создающий кораблик врага.
+	 */
 	private void initializeEnemyShip() {
 		Dimension enemyShipDimension = new Dimension(
 				Constants.ENEMY_SHIP_WIDTH, Constants.ENEMY_SHIP_HEIGHT);
@@ -60,27 +104,33 @@ public class Model {
 		this.enemyShip = new EnemyShip(enemyShipInfo, this.gameField, listeners);
 	}
 
+	/**
+	 * Метод вызывающий у кораблика игрока метод смещения влево.
+	 */
 	public void shiftShipLeft() {
 		if (isGameRunning) {
 			playerShip.shiftLeft();
 		}
 	}
 
+	/**
+	 * Метод вызывающий у кораблика игрока метод смещения вправо.
+	 */
 	public void shiftShipRight() {
 		if (isGameRunning) {
 			playerShip.shiftRight();
 		}
 	}
 
-	private void initialize() {
+	/**
+	 * Метод инициализирующий начальные игровые данные.
+	 * С заданной периодичностью обновляет игровые данные и следит за окончанием игры.
+	 */
+	public void startGame() {
+		isGameRunning = true;
 		initializeGameField();
 		initializeShip();
 		initializeEnemyShip();
-	}
-
-	public void startGame() {
-		isGameRunning = true;
-		initialize();
 		enemyShip.start();
 		playerShip.start();
 
@@ -114,12 +164,18 @@ public class Model {
 		}
 	}
 
+	/**
+	 * Метод вызывет у кораблика игрока метод выстрела.
+	 */
 	public void makeShoot() {
 		if (isGameRunning) {
 			playerShip.shootBullet();
 		}
 	}
 
+	/**
+	 * Метод вызывет у кораблика врага метод выстрела.
+	 */
 	public void enemyShoot() {
 		if (isGameRunning) {
 			enemyShip.shootBullet();
